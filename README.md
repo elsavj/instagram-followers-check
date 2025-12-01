@@ -1,5 +1,6 @@
 # instagram-followers-check
-a simple script for checking who isn't following you back on instagram
+A simple script for checking who isn't following you back on instagram.
+This guide is for people who have minimal/no coding knowledge.
 
 # Step 1: Download your follower info from instagram
 
