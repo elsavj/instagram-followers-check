@@ -20,11 +20,12 @@ a simple script for checking who isn't following you back on instagram
 
 
 6. Select "Date range" and select "All time".
+   <div></div>
    <img width="578" height="370" alt="Screenshot 2025-12-01 at 11 47 22 AM" src="https://github.com/user-attachments/assets/311fc0f3-e271-4e18-a6ff-17c74d85e191" />
 
-7. Select "format" and choose JSON. Then, start the export. 
+8. Select "format" and choose JSON. Then, start the export. 
    <img width="578" height="370" alt="Screenshot 2025-12-01 at 11 47 22 AM" src="https://github.com/user-attachments/assets/188c0ac4-9501-49ea-801c-0abc792517cd" />
 
-8. Meta will update you on when the information will be ready to download, but it should take 3-5 minutes. You can go back to the same page to download your follower information - you should have at least these two files: followers_1.json and following.json.
+9. Meta will update you on when the information will be ready to download, but it should take 3-5 minutes. You can go back to the same page to download your follower information - you should have at least these two files: followers_1.json and following.json.
    <img width="577" height="330" alt="Screenshot 2025-12-01 at 11 48 57 AM" src="https://github.com/user-attachments/assets/3e7ec064-5dbf-44ec-a179-4f2c916350ee" />
 
