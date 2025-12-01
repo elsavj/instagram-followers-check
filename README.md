@@ -14,7 +14,7 @@ a simple script for checking who isn't following you back on instagram
 
 5. For the last step, click the "Customize information" option and deselect ALL the options except for "followers and following". ONLY check "followers and following". Click save.
    <img width="578" height="370" alt="Screenshot 2025-12-01 at 11 47 22 AM" src="https://github.com/user-attachments/assets/9af5200a-6e35-4063-85ba-8a77588d3806" />
-   <img width="580" height="406" alt="Screenshot 2025-12-01 at 11 37 23 AM" src="https://github.com/user-attachments/assets/2333a591-6207-4037-abb8-f38c8fee70b3" />
+   <img width="578" height="370" alt="Screenshot 2025-12-01 at 11 37 23 AM" src="https://github.com/user-attachments/assets/2333a591-6207-4037-abb8-f38c8fee70b3" />
 
 6. Select "Date range" and select "All time".
    <img width="578" height="370" alt="Screenshot 2025-12-01 at 11 47 22 AM" src="https://github.com/user-attachments/assets/311fc0f3-e271-4e18-a6ff-17c74d85e191" />
