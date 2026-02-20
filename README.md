@@ -58,6 +58,29 @@ You can use and run the script however you like. However, if you dont know how t
 - Sometimes, instagram will include accounts that are deactivated or disabled.
 
 
+## Run the web UI (simple Flask server)
+
+This repository now includes a minimal web UI and a small Flask server that accepts two uploaded files and returns the `not_following_back.txt` result as a download.
+
+1. Install dependencies (recommended in a virtualenv):
+
+```bash
+python3 -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+2. Run the server from the project root:
+
+```bash
+python3 app.py
+```
+
+3. Open your browser at http://localhost:5000/ and use the web UI — upload `following.json` and `followers_1.json` and the server will return `not_following_back.txt`.
+
+If you prefer the original command-line usage, continue to use `python3 compare_json.py` as described above.
+
+
 
 
 

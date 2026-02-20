@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<title>Instagram followers analyzer</title>
+		<style>
+			body { font-family: system-ui, -apple-system, Arial; max-width:720px; margin:40px auto; padding:0 16px }
+			label { display:block; margin-top:12px }
+			.btn { margin-top:16px }
+			#result { margin-top:16px; white-space:pre-wrap; background:#f7f7f7; padding:12px; border-radius:6px }
+		</style>
+	</head>
+	<body>
+		<h1>Instagram followers analyzer</h1>
+		<p>Upload your <code>following.json</code> and <code>followers_1.json</code>. The comparison runs locally in your browser and will show accounts not following you back.</p>
+
+		<form id="uploadForm">
+			<label>Following JSON (following.json)
+				<input type="file" name="following" accept="application/json" required />
+			</label>
+
+			<label>Followers JSON (followers_1.json)
+				<input type="file" name="followers" accept="application/json" required />
+			</label>
+
+			<button class="btn" type="submit">Analyze</button>
+		</form>
+
+		<div id="result" hidden>
+			<div id="counts" style="margin-bottom:8px"></div>
+			<div style="margin-bottom:8px">
+				<button id="downloadBtn" style="margin-right:8px" hidden>Download .txt</button>
+				<button id="copyBtn" hidden>Copy list</button>
+			</div>
+			<ul id="list" style="padding-left:20px;margin:0"></ul>
+		</div>
+
+		<script type="module">
+			import analyze from './compare_json.js'
+
+			const form = document.getElementById('uploadForm')
+			const result = document.getElementById('result')
+
+			const readFileText = (file) => new Promise((resolve, reject) => {
+				const r = new FileReader()
+				r.onload = () => resolve(r.result)
+				r.onerror = () => reject(new Error('Failed to read file'))
+				r.readAsText(file)
+			})
+
+			form.addEventListener('submit', async (e) => {
+				e.preventDefault()
+				result.hidden = true
+				const formEl = e.currentTarget
+				const followingFile = formEl.querySelector('input[name="following"]').files[0]
+				const followersFile = formEl.querySelector('input[name="followers"]').files[0]
+
+				if (!followingFile || !followersFile) {
+					result.textContent = 'Please select both files.'
+					result.hidden = false
+					return
+				}
+
+				try {
+					const [followingText, followersText] = await Promise.all([
+						readFileText(followingFile),
+						readFileText(followersFile)
+					])
+
+					let followingJson, followersJson
+					try {
+						followingJson = JSON.parse(followingText)
+					} catch (err) {
+						throw new Error('Could not parse following.json: ' + err.message)
+					}
+					try {
+						followersJson = JSON.parse(followersText)
+					} catch (err) {
+						throw new Error('Could not parse followers_1.json: ' + err.message)
+					}
+
+					const { followingCount, followersCount, notFollowingBack, text } = analyze(followingJson, followersJson)
+
+					const counts = document.getElementById('counts')
+					const listEl = document.getElementById('list')
+					const downloadBtn = document.getElementById('downloadBtn')
+					const copyBtn = document.getElementById('copyBtn')
+
+					counts.textContent = `Following loaded: ${followingCount} — Followers loaded: ${followersCount} — Not following back: ${notFollowingBack.length}`
+					listEl.innerHTML = ''
+					for (const u of notFollowingBack) {
+						const li = document.createElement('li')
+						li.textContent = u
+						listEl.appendChild(li)
+					}
+
+					// prepare download
+					const blob = new Blob([text], { type: 'text/plain' })
+					const url = URL.createObjectURL(blob)
+					downloadBtn.href = url
+					downloadBtn.download = 'not_following_back.txt'
+					downloadBtn.hidden = false
+					// make it act like an anchor
+					downloadBtn.onclick = () => {
+						const a = document.createElement('a')
+						a.href = url
+						a.download = 'not_following_back.txt'
+						document.body.appendChild(a)
+						a.click()
+						a.remove()
+						setTimeout(() => URL.revokeObjectURL(url), 2500)
+					}
+
+					copyBtn.hidden = false
+					copyBtn.onclick = async () => {
+						try {
+							await navigator.clipboard.writeText(text)
+							copyBtn.textContent = 'Copied'
+							setTimeout(() => copyBtn.textContent = 'Copy list', 1500)
+						} catch (err) {
+							alert('Copy failed: ' + err.message)
+						}
+					}
+
+					result.hidden = false
+				} catch (err) {
+					result.textContent = 'Error: ' + (err.message || String(err))
+					result.hidden = false
+				}
+			})
+		</script>
+	</body>
+</html>

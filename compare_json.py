@@ -13,10 +13,8 @@ following_names = {user['title'] for user in following['relationships_following'
 followers_names = set()
 count = 0
 for user in followers:
-    # string_list_data = json.loads(user['string_list_data'])
     string_list_data = user['string_list_data']
     followers_names.update({user['value'] for user in string_list_data})
-    # print(f"/////////////followers_names: {followers_names}")
 
 
 print(f"Following loaded: {len(following_names)}")
